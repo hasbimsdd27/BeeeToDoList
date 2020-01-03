@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- fontawesome css -->
+    <script src="https://kit.fontawesome.com/334385e3e9.js" crossorigin="anonymous"></script>
+    <title><%= dataJudul%></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var tanggallengkap = new String();
+      var namahari = ("Minggu Senin Selasa Rabu Kamis Jumat Sabtu");
+      namahari = namahari.split(" ");
+      var namabulan = ("Januari Februari Maret April Mei Juni Juli Agustus September Oktober November Desember");
+      namabulan = namabulan.split(" ");
+      var tgl = new Date();
+      var hari = tgl.getDay();
+      var tanggal = tgl.getDate();
+      var bulan = tgl.getMonth();
+      var tahun = tgl.getFullYear();
+      tanggallengkap = namahari[hari] + ", " +tanggal + " " + namabulan[bulan] + " " + tahun;
+  
+      // 1 detik = 1000
+      window.setTimeout("waktu()",1000);  
+      function waktu() {   
+      var tanggal = new Date();  
+      setTimeout("waktu()",1000);  
+      document.getElementById("jam").innerHTML = tanggal.getHours()+":"+tanggal.getMinutes()+":"+tanggal.getSeconds();
+      }
+  </script>
+    <div class="row mt-1">
+      <div class="col-md-8"></div>
+      <div class="col-3 col-md-2 text-right"><em><script language='JavaScript'>document.write(tanggallengkap);</script></em></div>
+      <div class="col-3 col-md-2" ><em id="jam"></em></div>
+    </div>
+    <div class="container">

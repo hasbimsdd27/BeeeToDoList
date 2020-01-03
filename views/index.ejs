@@ -1,0 +1,121 @@
+<%- include('layout/header') -%>
+<!-- Button trigger modal -->
+
+<h1 class="mt-2 text-center display-4">My To Do List</h1>
+<p class="text-center mb-2"><em>biar kamu ga gampang lupa, kaya lupa kalau dia udah ada yang punya :(</em></p>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="modalcreate" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalcreateLabel">Buat Kegiatan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/create" method="POST">
+                            <div class="form-group">
+                              <label for="kegiatan">Kegiatan</label>
+                              <input type="text" class="form-control" name="kegiatan">
+                            </div>
+                            <div class="form-group">
+                              <label for="deskripsi">Deskripsi</label>
+                              <input type="text" class="form-control" name="deskripsi">
+                            </div>
+                            <div class="form-group">
+                                <label for="kondisi">Sifat Kegiatan</label>
+                                <select class="form-control" id="kondisi" name="kondisi">
+                                  <% dataSifat.forEach((v)=>{ %>
+                                  <option value="<%= v.id%>"><%= v.sifat %></option>
+                                    <%})%>
+
+                                </select>
+                              </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+                    </div>
+                  </div>
+            </div>
+        
+      </div>
+    </div>
+  </div>
+
+<% dataKegiatan.forEach((v)=>{ %>
+  <div class="modal fade" id="modaledit<%= v.no%>" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modaledit<%= v.no%>Label">Edit Kegiatan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/update" method="POST">
+                          <input type="text" value="<%= v.no%>" hidden name="no">
+                          <div class="form-group">
+                            <label for="kegiatan">Kegiatan</label>
+                              <input type="text" class="form-control" name="kegiatan" value="<%= v.kegiatan %>" >
+                            </div>
+                            <div class="form-group">
+                              <label for="deskripsi">Deskripsi</label>
+                              <input type="text" class="form-control" name="deskripsi" value="<%= v.deskripsi %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="kondisi">Sifat Kegiatan</label>
+                                <select class="form-control" id="kondisi" name="kondisi">
+                                  <% dataSifat.forEach((v)=>{ %>
+                                  <option value="<%= v.id%>"><%= v.sifat %></option>
+                                    <%})%>
+
+                                </select>
+                              </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+                    </div>
+                  </div>
+            </div>
+        
+      </div>
+    </div>
+  </div>
+<% }); %>
+<div class="card  mt-3">
+    <div class="card-body">
+<div class="row">
+    <div class="col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <% dataKegiatan.forEach((v)=>{ %>
+        <a class="nav-link mt-1" id="v-pills-<%= v.no%>-tab" data-toggle="pill" href="#v-pills-<%= v.no%>" role="tab"><%= v.kegiatan%><em> (<%= v.sifat%>)</em> (<%= v.done%>)</a>
+        <% }); %>
+        <a class="nav-link btn btn-success text-white mt-1" data-toggle="modal"  data-target="#modalcreate" role="tab">+ Tambah Kegiatan</em></a>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="tab-content" id="v-pills-tabContent">
+        <% dataKegiatan.forEach((v)=>{ %>
+        <div class="tab-pane fade" id="v-pills-<%= v.no%>" role="tabpanel">
+            <p><%= v.deskripsi%></p>
+            <div class="text-right">
+                <a href="/delete?no=<%= v.no %>" class="badge badge-danger ml-2 text-left">delete</a>
+                <a href="" data-toggle="modal" data-target="#modaledit<%= v.no %>" class="badge badge-warning ml-2 text-left">edit</a>
+                <a href="/done?no=<%= v.no %>" class="badge badge-success ml-2 text-left">done</a>
+            </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<%- include('layout/footer') -%>
